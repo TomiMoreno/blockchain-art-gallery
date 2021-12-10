@@ -1,0 +1,96 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  text-align: center;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+.mainContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 64px;
+}
+
+.dataContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 600px;
+}
+
+.header {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.bio {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.waveButton {
+  cursor: pointer;
+  padding: 8px;
+  border: 0;
+  border-radius: 5px;
+  background: hsl(270, 50%, 40%);
+  color: honeydew;
+  border-color: honeydew;
+  transition: background 1s;
+}
+
+.waveButton:hover {
+  background: hsl(270, 50%, 50%);
+}
+
+.connectWalletButton {
+  cursor: pointer;
+  margin-top: 16px;
+  padding: 8px;
+  border: 0;
+  border-radius: 5px;
+  background: rgb(166,87,8);
+  background: radial-gradient(circle, rgba(166,87,8,1) 0%, rgba(221,134,63,1) 51%, rgba(255,180,100,1) 100%);
+  opacity: 0.8;
+  color: honeydew;
+  border-color: honeydew;
+  transition: all 1s;
+}
+
+.connectWalletButton:hover {
+  opacity: 1;
+}
+
+table {
+  display: grid;
+  border-collapse: collapse;
+}
+
+td {
+  width: 20px;
+  height: 20px;
+  transition: background 0.1s;
+  box-sizing: border-box;
+  border-left: 1px solid #607d8b;
+  border-bottom: 1px solid #607d8b;
+}
+
+.sketchContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap:1rem;
+}
+
