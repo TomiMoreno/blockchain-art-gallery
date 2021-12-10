@@ -1,30 +1,25 @@
+const EXAMPLE_SKETCH = "#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#aaffff#aaffff#aaffff#aaffff#aaffff#aaffff#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00#00ff00"
 const main = async () => {
   const [owner, randomPerson] = await hre.ethers.getSigners();
-  const waveContractFactory = await hre.ethers.getContractFactory('WavePortal');
-  const waveContract = await waveContractFactory.deploy();
-  await waveContract.deployed();
+  const sketchContractFactory = await hre.ethers.getContractFactory('WavePortal');
+  const sketchContract = await sketchContractFactory.deploy();
+  await sketchContract.deployed();
 
-  console.log("Contract deployed to:", waveContract.address);
+  console.log("Contract deployed to:", sketchContract.address);
   console.log("Contract deployed by:", owner.address);
 
-  let waveCount;
-  waveCount = await waveContract.getTotalWaves();
+  let sketchCount;
+  sketchCount = await sketchContract.getTotalWaves();
   
-  let waveTxn = await waveContract.wave();
-  await waveTxn.wait();
+  let sketchTxn = await sketchContract.wave(EXAMPLE_SKETCH);
+  await sketchTxn.wait();
 
-  waveCount = await waveContract.getTotalWaves();
+  sketchCount = await sketchContract.getTotalWaves();
 
-  waveTxn = await waveContract.connect(randomPerson).wave();
-  await waveTxn.wait();
+  sketchTxn = await sketchContract.connect(randomPerson).wave(EXAMPLE_SKETCH);
+  await sketchTxn.wait();
 
-  waveTxn = await waveContract.connect(randomPerson).wave();
-  await waveTxn.wait();
-
-  waveTxn = await waveContract.connect(randomPerson).wave();
-  await waveTxn.wait();
-
-  waveCount = await waveContract.getTotalWaves();
+  sketchCount = await sketchContract.getTotalWaves();
 };
 
 const runMain = async () => {
