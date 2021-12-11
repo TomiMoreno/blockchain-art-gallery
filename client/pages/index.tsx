@@ -1,9 +1,9 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import Link from "next/link";
 import { useEffect, useState } from "react";
-import { ethers } from "ethers";
-import abi from "../utils/SketchPortal.json";
 import SketchCreator from "../components/SketchCreator";
+import useContract from "../hooks/useContract";
 
 declare global {
   interface Window {
@@ -17,31 +17,22 @@ const Home: NextPage = () => {
     <link rel="icon" href="/favicon.ico" />
   </Head>;
   const [currentAccount, setCurrentAccount] = useState("");
-  const [numberOfWaves, setNumberOfWaves] = useState(0);
-  const [isWaving, setIsWaving] = useState(false);
-  const contractAddress = "0xCEF1eFA7F3ac7033F1E6834aB8809163aF49EFbA";
-  const contractABI = abi.abi;
+  const [numberOfSketches, setNumberOfSketches] = useState(0);
+  const sketchContract = useContract()
   const checkIfWalletIsConnected = async () => {
     const { ethereum } = window;
-
-    if (!ethereum) {
+    if (!ethereum || !sketchContract) {
       console.log("Make sure you have metamask!");
       return;
-    } else {
-      console.log("We have the ethereum object", ethereum);
-    }
+    } 
     try {
-      const provider = new ethers.providers.Web3Provider(ethereum);
-      const signer = provider.getSigner();
-      const wavePortalContract = new ethers.Contract(
-        contractAddress,
-        contractABI,
-        signer
-      );
-
-      const count = await wavePortalContract.getTotalWaves();
+      const count = await sketchContract.getTotalWaves();
+      sketchContract.on("NewSketch", (...data) => {
+        console.log(data);
+        setNumberOfSketches(count.toNumber());
+      })
       console.log(count);
-      setNumberOfWaves(count.toNumber());
+      setNumberOfSketches(count.toNumber());
 
       const accounts = await ethereum.request({ method: "eth_accounts" });
 
@@ -99,12 +90,18 @@ const Home: NextPage = () => {
         {currentAccount && (
           <>
             <p>
-              Draw something cool and send it to the blockchain, your sketch will be
-              saved in the gallery and everyone will be able to see it! Use your
-              power wisely 🧑‍🎨
+              Draw something cool and send it to the blockchain,
+              your sketch will be saved in the {" "}
+              <Link href="/gallery">
+                <a>
+                  gallery
+                </a>
+              </Link> 
+              {" "} and everyone will be able to see it! 
+              Use your power wisely 🧑‍🎨
             </p>
-            {numberOfWaves > 0 ? (
-              <p>{numberOfWaves} people have sent their sketches</p>
+            {numberOfSketches > 0 ? (
+              <p>{numberOfSketches} people have sent their sketches</p>
             ) : (
               <p>No one has sent any sketches, you can be the first one 👀</p>
             )}

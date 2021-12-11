@@ -8,13 +8,28 @@ body {
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+  color: rgb(129,27,231);
 }
 
 * {
   box-sizing: border-box;
 }
+
+button{
+  cursor: pointer;
+  padding: 8px;
+  border: 0;
+  border-radius: 5px;
+  color: honeydew;
+  border-color: honeydew;
+  opacity: 0.8;
+  transition: opacity 1s;
+}
+
+button:hover{
+  opacity: 1;
+}
+
 .mainContainer {
   display: flex;
   justify-content: center;
@@ -41,41 +56,20 @@ a {
 }
 
 .waveButton {
-  cursor: pointer;
-  padding: 8px;
-  border: 0;
-  border-radius: 5px;
-  background: hsl(270, 50%, 40%);
-  color: honeydew;
-  border-color: honeydew;
-  transition: background 1s;
-}
-
-.waveButton:hover {
-  background: hsl(270, 50%, 50%);
+  background: rgb(129,27,231);
+  background: radial-gradient(circle, rgba(129,27,231,1) 0%, rgba(96,7,184,1) 51%, rgba(103,0,205,1) 100%);
 }
 
 .connectWalletButton {
-  cursor: pointer;
   margin-top: 16px;
-  padding: 8px;
-  border: 0;
-  border-radius: 5px;
   background: rgb(166,87,8);
   background: radial-gradient(circle, rgba(166,87,8,1) 0%, rgba(221,134,63,1) 51%, rgba(255,180,100,1) 100%);
-  opacity: 0.8;
-  color: honeydew;
-  border-color: honeydew;
-  transition: all 1s;
-}
-
-.connectWalletButton:hover {
-  opacity: 1;
 }
 
 table {
   display: grid;
   border-collapse: collapse;
+  margin: auto;
 }
 
 td {
@@ -85,6 +79,10 @@ td {
   box-sizing: border-box;
   border-left: 1px solid #607d8b;
   border-bottom: 1px solid #607d8b;
+  -webkit-user-select: none; /* Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
 }
 
 .sketchContainer {
@@ -94,3 +92,43 @@ td {
   gap:1rem;
 }
 
+.grid {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr) ) ;
+}
+
+.input:focus, .input[data-focus] {
+    z-index: 1;
+    border-color: rgb(99, 179, 237);
+    box-shadow: rgb(99 179 237) 0px 0px 0px 1px;
+}
+.input:hover, .input[data-hover] {
+  border-color: #CBD5E0
+}
+
+.input {
+    width: 100%;
+    min-width: 0px;
+    outline: transparent solid 2px;
+    outline-offset: 2px;
+    position: relative;
+    appearance: none;
+    transition-property: background-color,border-color,color,fill,stroke,opacity,box-shadow,transform;
+    transition-duration: 200ms;
+    font-size: 1rem;
+    padding-inline-start: 1rem;
+    padding-inline-end: 1rem;
+    height: 2rem;
+    border-radius: 0.375rem;
+    border-width: 1px;
+    border-style: solid;
+    border-image: initial;
+    border-color: inherit;
+    background: inherit;
+    border-color: #E2E8F0;
+}
+
+input::placeholder{
+  color: #A0AEC0;
+}
