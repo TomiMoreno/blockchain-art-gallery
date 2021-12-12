@@ -8,6 +8,7 @@ interface ISketch {
 	sketch: string;
 	sketcher: string;
 	timestamp: string;
+	title: string;
 }
 
 const Gallery:NextPage = () => {
@@ -36,8 +37,8 @@ const Gallery:NextPage = () => {
         </Link>{" "}
       </div>
       <div className="grid">
-        {sketches.map(({ sketch }, i) => (
-          <Sketch hashedGrid={sketch} key={i} />
+        {sketches.map(({ sketch, title }, i) => (
+          <Sketch hashedGrid={sketch} title={title} key={i} />
         ))}
       </div>
     </div>

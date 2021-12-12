@@ -12,10 +12,15 @@ const createGridFromHashedGrid = (hashedGrid:string) => {
   return grid;
 }
 
-
-export default function Sketch({hashedGrid}: {hashedGrid:string}) {
+interface Props {
+  hashedGrid: string;
+  title: string;
+}
+export default function Sketch({hashedGrid, title}: Props) {
   const grid = createGridFromHashedGrid(hashedGrid)
   return (
+    <div className="sketchContainer">
+      <h2>{title}</h2>
       <table>
         <tbody>
           {grid.map((row, i) => (
@@ -31,5 +36,6 @@ export default function Sketch({hashedGrid}: {hashedGrid:string}) {
           ))}
         </tbody>
       </table>
+    </div>
   );
 }

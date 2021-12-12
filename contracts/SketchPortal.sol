@@ -5,19 +5,20 @@ pragma solidity ^0.8.0;
 import "hardhat/console.sol";
 
 contract SketchPortal {
-    uint256 totalSketches;
+    uint256 numberOfSketches;
 
-    event NewSketch(address indexed from, uint256 timestamp, string sketch);
+    event NewSketch(address indexed from, uint256 timestamp, string sketch, string title);
 
     struct Sketch {
-        address sketcher; 
-        string sketch; 
-        uint256 timestamp; 
+        address sketcher;
+        string sketch;
+        string title;
+        uint256 timestamp;
     }
 
     Sketch[] sketches;
 
-    constructor() {
+    constructor() payable{
         console.log("I AM SMART CONTRACT. POG.");
     }
 
@@ -46,24 +47,32 @@ contract SketchPortal {
         return true;
     }
     
-    function sendSketch(string memory _sketch) public {
+    function sendSketch(string memory _sketch, string memory _title) public {
         if(!checkSketch(_sketch)){
             revert("Invalid sketch.");
         }
-        totalSketches += 1;
+        numberOfSketches += 1;
         console.log("%s sent a sketch!", msg.sender);
 
-        sketches.push(Sketch(msg.sender, _sketch, block.timestamp));
+        sketches.push(Sketch(msg.sender, _sketch, _title, block.timestamp));
 
-        emit NewSketch(msg.sender, block.timestamp, _sketch);
+        emit NewSketch(msg.sender, block.timestamp, _sketch, _title);
+
+        uint256 prizeAmount = 0.0001 ether;
+        require(
+            prizeAmount <= address(this).balance,
+            "Trying to withdraw more money than the contract has."
+        );
+        (bool success, ) = (msg.sender).call{value: prizeAmount}("");
+        require(success, "Failed to withdraw money from contract.");
     }
 
     function getAllSketches() public view returns (Sketch[] memory) {
         return sketches;
     }
 
-    function getTotalWaves() public view returns (uint256) {
-        console.log("We have %d total sketches!", totalSketches);
-        return totalSketches;
+    function getNumberOfSketches() public view returns (uint256) {
+        console.log("We have %d total sketches!", numberOfSketches);
+        return numberOfSketches;
     }
 }

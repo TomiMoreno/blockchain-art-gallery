@@ -48,6 +48,7 @@ export default function SketchCreator() {
             setActualColor(value);
           }}
           id="pickColor"
+          value={actualColor}
         />
       </div>
       <input
@@ -82,7 +83,7 @@ export default function SketchCreator() {
           ))}
         </tbody>
       </table>
-      <SendSketchButton hashedSketch={formatGrid(grid)} />
+      <SendSketchButton hashedSketch={formatGrid(grid)} title={title}/>
     </div>
   );
 }

@@ -26,7 +26,7 @@ const Home: NextPage = () => {
       return;
     } 
     try {
-      const count = await sketchContract.getTotalWaves();
+      const count = await sketchContract.getNumberOfSketches();
       sketchContract.on("NewSketch", (...data) => {
         console.log(data);
         setNumberOfSketches(count.toNumber());

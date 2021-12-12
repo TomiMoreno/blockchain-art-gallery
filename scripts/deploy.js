@@ -5,11 +5,14 @@ const main = async () => {
   console.log('Deploying contracts with account: ', deployer.address);
   console.log('Account balance: ', accountBalance.toString());
 
-  const Token = await hre.ethers.getContractFactory('SketchPortal');
-  const portal = await Token.deploy();
-  await portal.deployed();
+  const sketchContractFactory = await hre.ethers.getContractFactory('SketchPortal');
+  const sketchContract = await sketchContractFactory.deploy({
+    value: hre.ethers.utils.parseEther('0.01')
+  });
 
-  console.log('SketchPortal address: ', portal.address);
+  await sketchContract.deployed();
+
+  console.log('SketchPortal address: ', sketchContract.address);
 };
 
 const runMain = async () => {
