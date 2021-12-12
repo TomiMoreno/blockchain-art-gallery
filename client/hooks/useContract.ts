@@ -2,7 +2,7 @@ import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import abi from "../utils/SketchPortal.json";
 
-const contractAddress = "0xF761689AbED0293e062638c8790F96928c5C33C3";
+const contractAddress = "0xff178B8E011Bc553A7f382CC5dddEA689480601A";
 const contractABI = abi.abi;
 
 export default function useContract() {

@@ -22,6 +22,8 @@ const main = async () => {
   let sketchTxn = await sketchContract.sendSketch(EXAMPLE_SKETCH, 'Title');
   await sketchTxn.wait();
 
+  sketchTxn = await sketchContract.sendSketch(EXAMPLE_SKETCH, 'Title');
+  await sketchTxn.wait();
   contractBalance = await hre.ethers.provider.getBalance(
     sketchContract.address
   );
