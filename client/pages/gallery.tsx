@@ -1,30 +1,13 @@
 import { NextPage } from "next";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import Sketch from "../components/Sketch";
-import useContract from "../hooks/useContract";
-
-interface ISketch {
-	sketch: string;
-	sketcher: string;
-	timestamp: string;
-	title: string;
-}
+import { useContext } from "react";
+import { SketchContractContext } from "../store/SketchContractContext";
 
 const Gallery:NextPage = () => {
-	const SketchContract = useContract();
-	const [sketches, setSketches] = useState<ISketch[]>([]);
-
-	useEffect(()=>{
-		const getSketches = async () => {
-			if(!SketchContract){
-				return;
-			}
-			const sketches = await SketchContract.getAllSketches();
-			setSketches(sketches);
-		}
-		getSketches();
-	},[SketchContract])
+  const {
+		sketches
+  } = useContext(SketchContractContext);
 
 	return (
     <div>
