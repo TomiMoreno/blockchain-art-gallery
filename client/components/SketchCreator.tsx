@@ -1,6 +1,6 @@
 import { useState } from "react";
-import SendSketchButton from "./SendSketchButton";
 import rgba2hex from "../utils/RgbaToHex";
+import { useSendSketch } from "../hooks/useSendSketch";
 
 const SIZE = 16;
 const DEFAULT_GRID_COLOR = "#d9d9d9";
@@ -22,15 +22,34 @@ const formatGrid = (grid:string[][]) =>
   }, "");
 
 export default function SketchCreator() {
+  const {sendSketch, isLoading} = useSendSketch()
   const [grid, setGrid] = useState(generateGrid());
   const [actualColor, setActualColor] = useState("#aaffff");
   const [title, setTitle] = useState("");
+  const [titleError, setTitleError] = useState<null | true>(null)
 
   const handlePaintCell = (i:number, j:number) => {
     const copyOfGrid = JSON.parse(JSON.stringify(grid));
     copyOfGrid[i][j] = actualColor;
     setGrid(copyOfGrid);
   };
+  const handleSubmit = () => {
+    if(!title){
+      setTitleError(true);
+      return;
+    }
+    setTitleError(null);
+    sendSketch(formatGrid(grid), title);
+  }
+
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
+    if(e.target.value.length === 0){
+      setTitleError(true);
+    } else {
+      setTitleError(null);
+    }
+  }
 
   return (
     <div className="sketchContainer">
@@ -51,13 +70,25 @@ export default function SketchCreator() {
           value={actualColor}
         />
       </div>
-      <input
-        type="text"
-        className="input"
-        placeholder="Enter your title"
-        value={title}
-        onChange={(e)=>setTitle(e.target.value)}
-      />
+      <div>
+        <input
+          type="text"
+          className={`input ${titleError && 'input-error'}`}
+          placeholder="Enter your title"
+          value={title}
+          onChange={handleInput}
+          id="title"
+        />
+        {
+          titleError && 
+            <label
+              className="input-error"
+              htmlFor="title"
+            >
+              Title is required
+            </label>
+        }
+      </div>
       <table>
         <tbody>
           {grid.map((row, i) => (
@@ -83,7 +114,9 @@ export default function SketchCreator() {
           ))}
         </tbody>
       </table>
-      <SendSketchButton hashedSketch={formatGrid(grid)} title={title}/>
+      <button className="waveButton" onClick={handleSubmit}>
+        {isLoading ? "Sending..." : "Send your sketch!"}
+      </button>
     </div>
   );
 }

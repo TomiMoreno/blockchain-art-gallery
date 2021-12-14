@@ -69,7 +69,7 @@ button:hover{
 table {
   display: grid;
   border-collapse: collapse;
-  margin: auto;
+  margin: 0 auto;
 }
 
 td {
@@ -89,6 +89,7 @@ td {
 .sketchContainer {
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
   align-items: center;
   gap:1rem;
 }
@@ -132,4 +133,15 @@ td {
 
 input::placeholder{
   color: #A0AEC0;
+}
+
+.input-error{
+  border-color: #F44336;
+  color: #F44336;
+}
+
+label.input-error {
+  color: #F44336;
+  font-size: 10px;
+  text-align: left;
 }
