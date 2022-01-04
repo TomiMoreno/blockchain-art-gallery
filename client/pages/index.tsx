@@ -15,7 +15,8 @@ const Home: NextPage = () => {
   <Head>
     <title>Home</title>
     <link rel="icon" href="/favicon.ico" />
-  </Head>;
+    <link rel="shortcut icon" href="/android-chrome-192x192.png" />
+  </Head>
   const {
     connectWallet,
     changeNetwork,
@@ -24,7 +25,6 @@ const Home: NextPage = () => {
     sketches
   } = useContext(SketchContractContext);
   const numberOfSketches = sketches.length;
-  console.log(currentNetwork)
 
   return (
     <div className="mainContainer">

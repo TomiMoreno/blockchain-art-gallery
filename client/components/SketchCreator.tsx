@@ -60,7 +60,6 @@ export default function SketchCreator() {
           onChange={(e) => {
             const { value } = e.target;
             if(value.startsWith('rgba')){
-              console.log(rgba2hex(value).slice(0,-2))
               setActualColor('#' + rgba2hex(value).slice(0,-2));
               return;
             }

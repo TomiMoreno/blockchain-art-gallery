@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useCallback } from "react";
-import { ethers, providers } from "ethers";
+import { ethers } from "ethers";
 import abi from "../utils/SketchPortal.json";
 
 interface ISketch {
@@ -68,17 +68,18 @@ const SketchContractProvider = ({
     }
   }, []);
 
+  const checkIfWalletConnected = async () => {
+    const accounts = await window.ethereum.request({ method: "eth_accounts" });
+    if (accounts.length !== 0) {
+      const account = accounts[0];
+      setCurrentAccount(account);
+    }
+  };
 
   useEffect(() => {
     const { ethereum } = window;
     if (ethereum && contractAddress) {
       const provider = new ethers.providers.Web3Provider(ethereum, "any");
-      provider.on("network", async (newNetwork, oldNetwork) => {
-        if (oldNetwork) {
-          window.location.reload();
-        }
-        setCurrentNetwork(newNetwork.name);
-      });
       const signer = provider.getSigner();
       const sketchContract = new ethers.Contract(
         contractAddress,
@@ -86,14 +87,23 @@ const SketchContractProvider = ({
         signer
       );
       setContract(sketchContract);
-      const checkIfWalletConnected = async () => {
-        const accounts = await ethereum.request({ method: "eth_accounts" });
-        if (accounts.length !== 0) {
-          const account = accounts[0];
-          setCurrentAccount(account);
-        }
-      };
       checkIfWalletConnected();
+
+      provider.on("network", async (newNetwork, oldNetwork) => {
+        if (oldNetwork) {
+          window.location.reload();
+        }
+        setCurrentNetwork(newNetwork.name);
+      });
+      ethereum.on("accountsChanged", async (accounts: string[]) => {
+        if (accounts.length === 0) {
+          window.location.reload();
+        }
+        setCurrentAccount(accounts[0]);
+      });
+      ethereum.on("disconnect", async () => {
+        window.location.reload();
+        });
     }
   }, []);
 
@@ -110,10 +120,10 @@ const SketchContractProvider = ({
       setSketches(sketches);
       } catch (error) {
         console.log(error);
-      }
-    };
+      };
+    }
     getSketches();
-  }, [contract]);
+  }, [contract, currentAccount]);
 
   const value = {
     contract,
