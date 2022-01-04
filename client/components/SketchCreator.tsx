@@ -3,7 +3,7 @@ import rgba2hex from "../utils/RgbaToHex";
 import { useSendSketch } from "../hooks/useSendSketch";
 
 const SIZE = 16;
-const DEFAULT_GRID_COLOR = "#d9d9d9";
+const DEFAULT_GRID_COLOR = "#FFF";
 
 const generateGrid = () => {
   const grid:string[][]  = [];

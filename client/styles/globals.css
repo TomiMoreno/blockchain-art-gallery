@@ -53,6 +53,7 @@ button:hover{
 .bio {
   text-align: center;
   margin-top: 16px;
+  margin-bottom: 16px;
 }
 
 .waveButton {
@@ -66,10 +67,21 @@ button:hover{
   background: radial-gradient(circle, rgba(166,87,8,1) 0%, rgba(221,134,63,1) 51%, rgba(255,180,100,1) 100%);
 }
 
+.changeNetworkButton {
+  margin-top: 16px;
+  background: rgb(34,195,69);
+  background: linear-gradient(90deg, rgba(34,195,69,1) 0%, rgba(45,49,253,1) 100%);
+}
+
 table {
   display: grid;
   border-collapse: collapse;
   margin: 0 auto;
+}
+
+tbody{
+  border-top: 1px solid #607d8b;
+  border-right: 1px solid #607d8b;
 }
 
 td {

@@ -18,10 +18,13 @@ const Home: NextPage = () => {
   </Head>;
   const {
     connectWallet,
+    changeNetwork,
     currentAccount,
+    currentNetwork,
     sketches
   } = useContext(SketchContractContext);
   const numberOfSketches = sketches.length;
+  console.log(currentNetwork)
 
   return (
     <div className="mainContainer">
@@ -34,23 +37,32 @@ const Home: NextPage = () => {
           blockchain development 🔗
         </div>
 
-        {!currentAccount && (
+        {!currentAccount && currentNetwork === "rinkeby" && (
           <button className="connectWalletButton" onClick={connectWallet}>
             Connect Wallet 💰
           </button>
+        ) }
+        
+        { currentNetwork !== "rinkeby" && (
+          <>
+            <div>
+              You are currently connected to {currentNetwork} network. To use
+              the app you need to connect to the rinkeby network.
+            </div>
+            <button className="changeNetworkButton" onClick={changeNetwork}>
+              Change Network 🔗
+            </button>
+          </>
         )}
-        {currentAccount && (
+        {currentAccount && currentNetwork === "rinkeby" && (
           <>
             <p>
-              Draw something cool and send it to the blockchain,
-              your sketch will be saved in the {" "}
+              Draw something cool and send it to the blockchain, your sketch
+              will be saved in the{" "}
               <Link href="/gallery">
-                <a>
-                  gallery
-                </a>
-              </Link> 
-              {" "} and everyone will be able to see it! 
-              Use your power wisely 🧑‍🎨
+                <a>gallery</a>
+              </Link>{" "}
+              and everyone will be able to see it! Use your power wisely 🧑‍🎨
             </p>
             {numberOfSketches > 0 ? (
               <p>{numberOfSketches} people have sent their sketches</p>
